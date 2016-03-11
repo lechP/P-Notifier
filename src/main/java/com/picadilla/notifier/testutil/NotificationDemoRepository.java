@@ -1,6 +1,6 @@
 package com.picadilla.notifier.testutil;
 
-import com.picadilla.notifier.model.Notification;
+import com.picadilla.notifier.model.NotificationEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,12 +15,12 @@ public class NotificationDemoRepository {
     @PersistenceContext
     private EntityManager em;
 
-    public List<Notification> getAllNotifications() {
-        return em.createNamedQuery("Notification.All", Notification.class).getResultList();
+    public List<NotificationEntity> getAllNotifications() {
+        return em.createNamedQuery("Notification.All", NotificationEntity.class).getResultList();
     }
 
-    public void save(Notification notification){
-        em.persist(notification);
+    public void save(NotificationEntity notificationEntity){
+        em.persist(notificationEntity);
     }
 
 

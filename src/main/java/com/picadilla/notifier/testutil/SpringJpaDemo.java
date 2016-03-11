@@ -1,6 +1,6 @@
 package com.picadilla.notifier.testutil;
 
-import com.picadilla.notifier.model.Notification;
+import com.picadilla.notifier.model.NotificationEntity;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ApplicationContext;
@@ -19,13 +19,13 @@ public class SpringJpaDemo {
         ApplicationContext context = new ClassPathXmlApplicationContext("META-INF/spring-prod-config.xml");
         NotificationService service = (NotificationService) context.getBean("notificationService");
 
-        Notification notification = Notification.newNotification("abcd@uvaw.com", new Date());
-        service.saveNotification(notification);
-        log.info("Succesfully saved: " + notification);
+        NotificationEntity notificationEntity = NotificationEntity.newNotification("abcd@uvaw.com", new Date());
+        service.saveNotification(notificationEntity);
+        log.info("Succesfully saved: " + notificationEntity);
 
-        List<Notification> all = service.getAllNotifications();
-        for (Notification notification1 : all) {
-            log.warn("Found notification in db: " + notification1);
+        List<NotificationEntity> all = service.getAllNotifications();
+        for (NotificationEntity notificationEntity1 : all) {
+            log.warn("Found notificationEntity in db: " + notificationEntity1);
         }
 
         log.info("good night");

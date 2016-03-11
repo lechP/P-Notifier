@@ -1,5 +1,8 @@
 package com.picadilla.notifier.model;
 
+import org.springframework.util.Assert;
+
+import javax.annotation.Nonnull;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Temporal;
@@ -16,9 +19,11 @@ public class NotificationId implements Serializable {
     @Temporal(value = TemporalType.TIMESTAMP)
     private Date date;
 
-    public NotificationId(String email, Date date){
+    public NotificationId(@Nonnull String email, @Nonnull Date date){
+        Assert.notNull(email);
+        Assert.notNull(date);
         this.email = email;
-        this.date = date;
+        this.date = new Date(date.getTime());
     }
 
     public NotificationId() {
@@ -29,6 +34,6 @@ public class NotificationId implements Serializable {
     }
 
     public Date getDate() {
-        return date;
+        return new Date(date.getTime());
     }
 }
