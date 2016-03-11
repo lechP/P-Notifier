@@ -10,13 +10,17 @@ import java.util.List;
 
 @Repository
 @Transactional //TODO props??
-public class NotificationDemoResource {
+public class NotificationDemoRepository {
 
     @PersistenceContext
     private EntityManager em;
 
     public List<Notification> getAllNotifications() {
         return em.createNamedQuery("Notification.All", Notification.class).getResultList();
+    }
+
+    public void save(Notification notification){
+        em.persist(notification);
     }
 
 
