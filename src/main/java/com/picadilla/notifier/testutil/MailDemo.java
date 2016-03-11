@@ -1,4 +1,4 @@
-package com.picadilla.notifier.demo;
+package com.picadilla.notifier.testutil;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;

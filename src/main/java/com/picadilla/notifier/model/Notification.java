@@ -6,7 +6,8 @@ import java.util.Date;
 @Entity
 @Table(name = "t")
 @NamedQueries({
-        @NamedQuery(name = "Notification.All", query = "SELECT n FROM Notification n") })
+        @NamedQuery(name = "Notification.All", query = "SELECT n FROM Notification n"),
+        @NamedQuery(name = "Notification.top100toNotify", query = "SELECT n FROM Notification n")})
 public class Notification {
 
     @EmbeddedId

@@ -1,4 +1,4 @@
-package com.picadilla.notifier.demo;
+package com.picadilla.notifier.testutil;
 
 import com.picadilla.notifier.model.Notification;
 import org.springframework.stereotype.Repository;

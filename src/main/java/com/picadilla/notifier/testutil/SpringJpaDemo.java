@@ -1,4 +1,4 @@
-package com.picadilla.notifier.demo;
+package com.picadilla.notifier.testutil;
 
 import com.picadilla.notifier.model.Notification;
 import org.apache.commons.logging.Log;
@@ -14,9 +14,9 @@ public class SpringJpaDemo {
     private static final Log log = LogFactory.getLog(SpringJpaDemo.class);
 
     public static void main(String[] args) {
-        log.info("The demo begins");
+        log.info("The testutil begins");
 
-        ApplicationContext context = new ClassPathXmlApplicationContext("META-INF/spring-config.xml");
+        ApplicationContext context = new ClassPathXmlApplicationContext("META-INF/spring-prod-config.xml");
         NotificationService service = (NotificationService) context.getBean("notificationService");
 
         Notification notification = Notification.newNotification("abcd@uvaw.com", new Date());
