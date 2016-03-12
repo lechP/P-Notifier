@@ -15,7 +15,7 @@ public class NotificationService {
     private NotificationRepo notificationRepo;
 
     public List<? extends Notification> getAllNotifications() {
-        return notificationRepo.prepareNotSentAfter(new Date());
+        return notificationRepo.prepareNotSentBefore(new Date());
     }
 
 }

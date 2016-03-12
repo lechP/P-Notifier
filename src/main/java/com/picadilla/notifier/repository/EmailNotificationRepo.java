@@ -27,7 +27,7 @@ public class EmailNotificationRepo implements NotificationRepo {
     @Value("${notifier.bunch.size}")
     private int sizeOfBunch;
 
-    public List<EmailNotification> prepareNotSentAfter(@Nonnull Date maxDate) {
+    public List<EmailNotification> prepareNotSentBefore(@Nonnull Date maxDate) {
         Assert.notNull(maxDate);
         List<EmailNotification> notifications = em.createNamedQuery("Notification.bunchToNotify", EmailNotification.class)
                 .setParameter("maxDate", maxDate)

@@ -1,5 +1,6 @@
 package com.picadilla.notifier.domain;
 
+import com.picadilla.notifier.exception.UnpreparedNotificationException;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -56,6 +57,14 @@ public class EmailNotificationTest {
         testedObject.prepare(mockStrategy);
         //then
         assertThat(testedObject.getStatusOfNext()).isEqualTo(NextNotificationStatus.IN_PROGRESS);
+    }
+
+    @Test(expected = UnpreparedNotificationException.class)
+    public void shouldBeUnableToSendIfNotPreparedPreviously() {
+        //given
+        testedObject = getTestEmailNotification();
+        //when
+        testedObject.send();
     }
 
     @Test

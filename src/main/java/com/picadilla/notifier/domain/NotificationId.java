@@ -39,4 +39,21 @@ public class NotificationId implements Serializable {
     public Date getDate() {
         return new Date(date.getTime());
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        NotificationId that = (NotificationId) o;
+
+        return email.equals(that.email) && date.equals(that.date);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = email.hashCode();
+        result = 31 * result + date.hashCode();
+        return result;
+    }
 }

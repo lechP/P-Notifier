@@ -1,5 +1,6 @@
 package com.picadilla.notifier.domain;
 
+import com.picadilla.notifier.exception.UnpreparedNotificationException;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.util.Assert;
 
@@ -66,6 +67,25 @@ public class EmailNotification implements Notification, Serializable {
 
     @Override
     public void send() {
+        if(strategy==null){
+            throw new UnpreparedNotificationException("Notification should have been prepared before it is to be sent");
+        }
         strategy.send(this);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        EmailNotification that = (EmailNotification) o;
+
+        return id.equals(that.id);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
     }
 }

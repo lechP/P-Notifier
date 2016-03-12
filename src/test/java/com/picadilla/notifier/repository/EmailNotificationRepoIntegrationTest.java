@@ -1,6 +1,5 @@
 package com.picadilla.notifier.repository;
 
-import com.picadilla.notifier.domain.EmailNotification;
 import com.picadilla.notifier.domain.Notification;
 import com.picadilla.notifier.testutil.DatabaseTest;
 import org.junit.Test;
@@ -29,15 +28,15 @@ public class EmailNotificationRepoIntegrationTest extends DatabaseTest {
         Calendar rightNow = Calendar.getInstance();
         rightNow.add(Calendar.DAY_OF_MONTH, -5);
         Date maxDate = rightNow.getTime();
-        List<? extends Notification> resultList = sut.prepareNotSentAfter(maxDate);
+        List<? extends Notification> resultList = sut.prepareNotSentBefore(maxDate);
         assertThat(resultList).hasSize(2);
     }
 
     @Test
     public void shouldGetExactly100NotificationsInFirstCallAnd10InSecond() throws Exception {
         loadData(SCRIPT_110_NOTIFICATIONS);
-        List<? extends Notification> firstBunch = sut.prepareNotSentAfter(new Date());
-        List<? extends Notification> secondBunch = sut.prepareNotSentAfter(new Date());
+        List<? extends Notification> firstBunch = sut.prepareNotSentBefore(new Date());
+        List<? extends Notification> secondBunch = sut.prepareNotSentBefore(new Date());
         assertThat(firstBunch).hasSize(SINGLE_BUNCH_SIZE);
         assertThat(secondBunch).hasSize(10);
     }
