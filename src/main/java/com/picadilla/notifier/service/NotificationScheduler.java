@@ -13,12 +13,24 @@ public class NotificationScheduler implements Scheduler {
 
     @Autowired
     private Notifier notifier;
-    @Value("${notifier.notification.period.days}")
-    private int notificationPeriod;
+    @Value("${notifier.notification.period.value}")
+    private int periodValue;
+    @Value("${notifier.notification.period.unit:HOURS}")
+    private String periodUnit;
 
     @Override
     public void schedule() {
         ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
-        service.scheduleAtFixedRate(() -> notifier.notifyBunchOfPlayers(), 0, notificationPeriod, TimeUnit.MINUTES);
+        service.scheduleAtFixedRate(() -> notifier.notifyBunchOfPlayers(), 0, periodValue, getTimeUnit());
     }
+
+    private TimeUnit getTimeUnit(){
+        try{
+            return TimeUnit.valueOf(periodUnit);
+        }catch(IllegalArgumentException e){
+            return TimeUnit.HOURS;
+        }
+    }
+
+
 }
