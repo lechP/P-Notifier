@@ -1,6 +1,6 @@
 package com.picadilla.notifier.testutil;
 
-import com.picadilla.notifier.model.NotificationEntity;
+import com.picadilla.notifier.domain.NotificationEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

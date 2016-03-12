@@ -1,8 +1,8 @@
 package com.picadilla.notifier.repository;
 
-import com.picadilla.notifier.model.GmailNotificationStrategy;
-import com.picadilla.notifier.model.Notification;
-import com.picadilla.notifier.model.NotificationEntity;
+import com.picadilla.notifier.domain.GmailNotificationStrategy;
+import com.picadilla.notifier.domain.Notification;
+import com.picadilla.notifier.domain.NotificationEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;

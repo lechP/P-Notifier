@@ -1,4 +1,4 @@
-package com.picadilla.notifier.model;
+package com.picadilla.notifier.domain;
 
 public interface Notification {
 

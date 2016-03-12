@@ -1,4 +1,4 @@
-package com.picadilla.notifier.model;
+package com.picadilla.notifier.domain;
 
 import org.junit.Before;
 import org.junit.Test;

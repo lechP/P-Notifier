@@ -1,6 +1,6 @@
 package com.picadilla.notifier.testutil;
 
-import com.picadilla.notifier.model.NotificationEntity;
+import com.picadilla.notifier.domain.NotificationEntity;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ApplicationContext;

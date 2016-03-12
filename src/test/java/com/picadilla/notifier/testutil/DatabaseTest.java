@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.sql.DataSource;
 
 /**
- *
+ * abstract class to support integration tests which need whole spring context (especially connection with database)
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("/META-INF/spring-test-config.xml")
@@ -29,7 +29,10 @@ public abstract class DatabaseTest {
     @Autowired
     private DataSource dataSource;
 
-    /** loads data to the database using script under provided scriptPath */
+    /**
+     * loads data to the database using script under provided scriptPath
+     * @param scriptPath path to sql script
+     */
     protected void loadData(String scriptPath) {
         log.debug("Will load data from: " + scriptPath);
         Resource resource = ctx.getResource(scriptPath);

@@ -1,6 +1,6 @@
 package com.picadilla.notifier.repository;
 
-import com.picadilla.notifier.model.Notification;
+import com.picadilla.notifier.domain.Notification;
 import com.picadilla.notifier.testutil.DatabaseTest;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
