@@ -1,8 +1,10 @@
 package com.picadilla.notifier.repository;
 
+import com.picadilla.notifier.domain.EmailNotification;
 import com.picadilla.notifier.domain.GmailNotificationStrategy;
 import com.picadilla.notifier.domain.Notification;
-import com.picadilla.notifier.domain.NotificationEntity;
+import com.picadilla.notifier.domain.NotificationStrategy;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -15,17 +17,20 @@ import java.util.List;
 
 @Repository
 @Transactional
-public class NotificationRepository {
+public class EmailNotificationRepo implements NotificationRepo<EmailNotification> {
 
     @PersistenceContext
     private EntityManager em;
 
-    public List<? extends Notification> getNotSentBefore(@Nonnull Date maxDate) {
+    @Autowired
+    private NotificationStrategy strategy;
+
+    public List<EmailNotification> prepareNotSentAfter(@Nonnull Date maxDate) {
         Assert.notNull(maxDate);
-        List<NotificationEntity> notifications = em.createNamedQuery("Notification.All", NotificationEntity.class)
+        List<EmailNotification> notifications = em.createNamedQuery("Notification.All", EmailNotification.class)
                 .setParameter("maxDate", maxDate)
                 .setMaxResults(100).getResultList();
-        notifications.forEach(notification -> notification.prepare(new GmailNotificationStrategy()));
+        notifications.forEach(notification -> notification.prepare(strategy));
         return notifications;
     }
 }

@@ -4,15 +4,18 @@ import org.springframework.util.Assert;
 
 import javax.annotation.Nonnull;
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @Table(name = "t")
 @NamedQueries({
-        @NamedQuery(name = "Notification.All", query = "SELECT n FROM NotificationEntity n " +
+        @NamedQuery(name = "Notification.All", query = "SELECT n FROM EmailNotification n " +
                 "WHERE n.statusOfNext = 'NONE' AND n.id.date <= :maxDate"),
-        @NamedQuery(name = "Notification.top100toNotify", query = "SELECT n FROM NotificationEntity n")})
-public class NotificationEntity implements Notification {
+        @NamedQuery(name = "Notification.top100toNotify", query = "SELECT n FROM EmailNotification n")})
+public class EmailNotification implements Notification, Serializable {
+
+    private static final long serialVersionUID = 10985353323534L;
 
     @EmbeddedId
     private NotificationId id;
@@ -24,6 +27,15 @@ public class NotificationEntity implements Notification {
     @Transient
     private NotificationStrategy strategy;
 
+    /** for JPA provider use only */
+    protected EmailNotification(){}
+
+    public EmailNotification(String email, Date date){
+        Assert.notNull(date);
+        this.statusOfNext = NextNotificationStatus.NONE;
+        this.id = new NotificationId(email, new Date(date.getTime()));
+    }
+
     public NextNotificationStatus getStatusOfNext() {
         return statusOfNext;
     }
@@ -34,13 +46,6 @@ public class NotificationEntity implements Notification {
 
     public Date getDate() {
         return new Date(id.getDate().getTime());
-    }
-
-    public static NotificationEntity newNotification(String email, Date date) {
-        NotificationEntity result = new NotificationEntity();
-        result.statusOfNext = NextNotificationStatus.NONE;
-        result.id = new NotificationId(email, new Date(date.getTime()));
-        return result;
     }
 
     @Override

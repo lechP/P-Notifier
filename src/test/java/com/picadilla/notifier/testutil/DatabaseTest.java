@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.sql.DataSource;
 
 /**
- * abstract class to support integration tests which need whole spring context (especially connection with database)
+ * abstract class supporting integration tests which need whole Spring context (especially connection with database)
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes=CommonConfig.class)
@@ -31,7 +31,8 @@ public abstract class DatabaseTest {
     private DataSource dataSource;
 
     /**
-     * loads data to the database using script under provided scriptPath
+     * Loads data to the database using script under provided scriptPath. Designed as helper method for tests.
+     * Thanks to @Transactional annotation, script will be rolled back after end of each test using this method.
      * @param scriptPath path to sql script
      */
     protected void loadData(String scriptPath) {

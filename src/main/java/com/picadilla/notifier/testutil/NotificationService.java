@@ -1,23 +1,21 @@
 package com.picadilla.notifier.testutil;
 
-import com.picadilla.notifier.domain.NotificationEntity;
+import com.picadilla.notifier.domain.EmailNotification;
+import com.picadilla.notifier.repository.NotificationRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
 public class NotificationService {
 
     @Autowired
-    private NotificationDemoRepository notificationRepository;
+    private NotificationRepo<EmailNotification> notificationRepository;
 
-    public List<NotificationEntity> getAllNotifications(){
-        return notificationRepository.getAllNotifications();
-    }
-
-    public void saveNotification(NotificationEntity notificationEntity){
-        notificationRepository.save(notificationEntity);
+    public List<EmailNotification> getAllNotifications(){
+        return notificationRepository.prepareNotSentAfter(new Date());
     }
 
 }
