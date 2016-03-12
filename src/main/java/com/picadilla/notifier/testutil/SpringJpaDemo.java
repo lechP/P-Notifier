@@ -1,6 +1,7 @@
 package com.picadilla.notifier.testutil;
 
 import com.picadilla.notifier.domain.EmailNotification;
+import com.picadilla.notifier.domain.Notification;
 import com.picadilla.notifier.spring.CommonConfig;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -19,10 +20,8 @@ public class SpringJpaDemo {
         ApplicationContext context = new AnnotationConfigApplicationContext(CommonConfig.class);
         NotificationService service = context.getBean(NotificationService.class);
 
-        List<EmailNotification> all = service.getAllNotifications();
-        for (EmailNotification notification : all) {
-            log.warn("Found emailNotification in db: " + notification);
-        }
+        List<? extends Notification> all = service.getAllNotifications();
+        all.forEach(n -> log.warn("Found emailNotification in db: " + n));
 
         log.info("good night");
     }

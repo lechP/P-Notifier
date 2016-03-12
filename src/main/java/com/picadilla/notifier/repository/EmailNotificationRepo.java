@@ -1,7 +1,6 @@
 package com.picadilla.notifier.repository;
 
 import com.picadilla.notifier.domain.EmailNotification;
-import com.picadilla.notifier.domain.GmailNotificationStrategy;
 import com.picadilla.notifier.domain.Notification;
 import com.picadilla.notifier.domain.NotificationStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +29,7 @@ public class EmailNotificationRepo implements NotificationRepo {
 
     public List<EmailNotification> prepareNotSentAfter(@Nonnull Date maxDate) {
         Assert.notNull(maxDate);
-        List<EmailNotification> notifications = em.createNamedQuery("Notification.All", EmailNotification.class)
+        List<EmailNotification> notifications = em.createNamedQuery("Notification.bunchToNotify", EmailNotification.class)
                 .setParameter("maxDate", maxDate)
                 .setMaxResults(sizeOfBunch).getResultList();
         notifications.forEach(notification -> notification.prepare(strategy));

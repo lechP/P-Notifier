@@ -13,7 +13,8 @@ import java.util.Date;
 @NamedQueries({
         @NamedQuery(name = "Notification.All", query = "SELECT n FROM EmailNotification n " +
                 "WHERE n.statusOfNext = 'NONE' AND n.id.date <= :maxDate"),
-        @NamedQuery(name = "Notification.top100toNotify", query = "SELECT n FROM EmailNotification n")})
+        @NamedQuery(name = "Notification.bunchToNotify", query = "SELECT n FROM EmailNotification n " +
+                "WHERE n.statusOfNext = 'NONE' AND n.id.date <= :maxDate")})
 public class EmailNotification implements Notification, Serializable {
 
     private static final long serialVersionUID = 10985353323534L;
