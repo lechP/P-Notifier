@@ -1,8 +1,5 @@
 package com.picadilla.notifier.domain;
 
-import org.springframework.util.Assert;
-import org.apache.commons.validator.routines.EmailValidator;
-import javax.annotation.Nonnull;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Temporal;
@@ -21,13 +18,16 @@ public class NotificationId implements Serializable {
     @Temporal(value = TemporalType.TIMESTAMP)
     private Date date;
 
-    /** for JPA provider use only */
-    protected NotificationId() {}
+    /**
+     * for JPA provider use only
+     */
+    protected NotificationId() {
+    }
 
-    public NotificationId(@Nonnull String email, @Nonnull Date date){
-        Assert.notNull(email);
-        Assert.isTrue(EmailValidator.getInstance().isValid(email));
-        Assert.notNull(date);
+    /**
+     * should not be created outside the package
+     */
+    NotificationId(String email, Date date) {
         this.email = email;
         this.date = new Date(date.getTime());
     }

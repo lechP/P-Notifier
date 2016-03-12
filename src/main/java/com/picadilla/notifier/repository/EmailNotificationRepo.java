@@ -18,7 +18,7 @@ import java.util.List;
 
 @Repository
 @Transactional
-public class EmailNotificationRepo implements NotificationRepo<EmailNotification> {
+public class EmailNotificationRepo implements NotificationRepo {
 
     @PersistenceContext
     private EntityManager em;
@@ -38,7 +38,7 @@ public class EmailNotificationRepo implements NotificationRepo<EmailNotification
     }
 
     @Override
-    public void update(List<EmailNotification> notifications) {
+    public void update(List<? extends Notification> notifications) {
 
     }
 }

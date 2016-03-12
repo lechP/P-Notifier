@@ -1,5 +1,6 @@
 package com.picadilla.notifier.domain;
 
+import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.util.Assert;
 
 import javax.annotation.Nonnull;
@@ -30,7 +31,9 @@ public class EmailNotification implements Notification, Serializable {
     /** for JPA provider use only */
     protected EmailNotification(){}
 
-    public EmailNotification(String email, Date date){
+    public EmailNotification(@Nonnull String email, @Nonnull Date date){
+        Assert.notNull(email);
+        Assert.isTrue(EmailValidator.getInstance().isValid(email));
         Assert.notNull(date);
         this.statusOfNext = NextNotificationStatus.NONE;
         this.id = new NotificationId(email, new Date(date.getTime()));
