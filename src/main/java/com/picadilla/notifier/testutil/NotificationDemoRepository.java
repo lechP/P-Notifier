@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -16,7 +17,7 @@ public class NotificationDemoRepository {
     private EntityManager em;
 
     public List<NotificationEntity> getAllNotifications() {
-        return em.createNamedQuery("Notification.All", NotificationEntity.class).getResultList();
+        return em.createNamedQuery("Notification.All", NotificationEntity.class).setParameter("maxDate", new Date()).getResultList();
     }
 
     public void save(NotificationEntity notificationEntity){

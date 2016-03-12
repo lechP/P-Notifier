@@ -1,5 +1,6 @@
 package com.picadilla.notifier.testutil;
 
+import com.picadilla.notifier.spring.CommonConfig;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.runner.RunWith;
@@ -18,7 +19,7 @@ import javax.sql.DataSource;
  * abstract class to support integration tests which need whole spring context (especially connection with database)
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("/META-INF/spring-test-config.xml")
+@ContextConfiguration(classes=CommonConfig.class)
 @Transactional
 public abstract class DatabaseTest {
 
