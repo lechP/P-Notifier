@@ -15,8 +15,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class EmailNotificationRepoIntegrationTest extends DatabaseTest {
 
     private static final String SCRIPTS_PATH = "/db/";
-    private static final String SCRIPT_110_NOTIFICATIONS = SCRIPTS_PATH + "testset_moreThan100.sql";
+    private static final String SCRIPT_110_NOTIFICATIONS = SCRIPTS_PATH + "testset_exceedingSingleBunchSize.sql";
     private static final String SCRIPT_SMALL = SCRIPTS_PATH + "testset_variousDatesAndStatuses.sql";
+
+    private static final int SINGLE_BUNCH_SIZE = 100;
 
     @Autowired
     private NotificationRepo<EmailNotification> sut;
@@ -36,7 +38,7 @@ public class EmailNotificationRepoIntegrationTest extends DatabaseTest {
         loadData(SCRIPT_110_NOTIFICATIONS);
         List<EmailNotification> firstBunch = sut.prepareNotSentAfter(new Date());
         List<EmailNotification> secondBunch = sut.prepareNotSentAfter(new Date());
-        assertThat(firstBunch).hasSize(100);
+        assertThat(firstBunch).hasSize(SINGLE_BUNCH_SIZE);
         assertThat(secondBunch).hasSize(10);
     }
 }

@@ -9,4 +9,5 @@ public interface NotificationRepo<T extends Notification> {
 
     List<T> prepareNotSentAfter(Date maxDate);
 
+    void update(List<T> notifications);
 }
