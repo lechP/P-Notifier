@@ -1,4 +1,4 @@
-package com.picadilla.notifier.exception;
+package com.picadilla.notifier.domain.exception;
 
 public class UnpreparedNotificationException extends RuntimeException {
 

@@ -1,5 +1,6 @@
-package com.picadilla.notifier.domain;
+package com.picadilla.notifier.business.strategy;
 
+import com.picadilla.notifier.domain.model.Notification;
 import org.springframework.stereotype.Component;
 
 @Component

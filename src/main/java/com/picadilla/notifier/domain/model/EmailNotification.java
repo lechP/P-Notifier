@@ -1,6 +1,7 @@
-package com.picadilla.notifier.domain;
+package com.picadilla.notifier.domain.model;
 
-import com.picadilla.notifier.exception.UnpreparedNotificationException;
+import com.picadilla.notifier.domain.exception.UnpreparedNotificationException;
+import com.picadilla.notifier.business.strategy.NotificationStrategy;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.util.Assert;
 

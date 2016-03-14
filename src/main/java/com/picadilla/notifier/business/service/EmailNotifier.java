@@ -1,7 +1,7 @@
-package com.picadilla.notifier.service;
+package com.picadilla.notifier.business.service;
 
-import com.picadilla.notifier.domain.Notification;
-import com.picadilla.notifier.repository.NotificationRepo;
+import com.picadilla.notifier.domain.model.Notification;
+import com.picadilla.notifier.domain.repository.NotificationRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

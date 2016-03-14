@@ -18,8 +18,8 @@ import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 @Configuration
-@ComponentScan(basePackages = "com.picadilla.notifier")
-@PropertySource(value="/application.properties")
+@ComponentScan(basePackages = {"com.picadilla.notifier.domain", "com.picadilla.notifier.business"})
+@PropertySource(value = "/application.properties")
 @EnableTransactionManagement
 public class CommonConfig {
 
@@ -37,14 +37,14 @@ public class CommonConfig {
     }
 
     @Bean
-    public PlatformTransactionManager transactionManager(EntityManagerFactory emf){
+    public PlatformTransactionManager transactionManager(EntityManagerFactory emf) {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(emf);
         return transactionManager;
     }
 
     @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory(){
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean emfb = new LocalContainerEntityManagerFactoryBean();
         emfb.setDataSource(dataSource());
         emfb.setPackagesToScan("com.picadilla.notifier.domain");
@@ -54,7 +54,7 @@ public class CommonConfig {
     }
 
     @Bean
-    public DataSource dataSource(){
+    public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
         dataSource.setUrl(dbUrl);

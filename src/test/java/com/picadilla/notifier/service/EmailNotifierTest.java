@@ -1,7 +1,8 @@
 package com.picadilla.notifier.service;
 
-import com.picadilla.notifier.domain.Notification;
-import com.picadilla.notifier.repository.NotificationRepo;
+import com.picadilla.notifier.business.service.EmailNotifier;
+import com.picadilla.notifier.domain.model.Notification;
+import com.picadilla.notifier.domain.repository.NotificationRepo;
 import org.assertj.core.util.Lists;
 import org.junit.Before;
 import org.junit.Test;

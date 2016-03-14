@@ -1,4 +1,4 @@
-package com.picadilla.notifier.domain;
+package com.picadilla.notifier.domain.model;
 
 import org.springframework.util.Assert;
 

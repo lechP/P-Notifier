@@ -1,8 +1,8 @@
-package com.picadilla.notifier.repository;
+package com.picadilla.notifier.domain.repository;
 
-import com.picadilla.notifier.domain.EmailNotification;
-import com.picadilla.notifier.domain.Notification;
-import com.picadilla.notifier.domain.NotificationStrategy;
+import com.picadilla.notifier.domain.model.EmailNotification;
+import com.picadilla.notifier.domain.model.Notification;
+import com.picadilla.notifier.business.strategy.NotificationStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
@@ -24,7 +24,7 @@ public class EmailNotificationRepo implements NotificationRepo {
 
     @Autowired
     private NotificationStrategy strategy;
-    @Value("${notifier.bunch.size}")
+    @Value("${notifier.batch.size}")
     private int sizeOfBunch;
 
     public List<EmailNotification> prepareNotSentBefore(@Nonnull Date maxDate) {

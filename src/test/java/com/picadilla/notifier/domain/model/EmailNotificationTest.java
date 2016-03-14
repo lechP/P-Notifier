@@ -1,6 +1,7 @@
-package com.picadilla.notifier.domain;
+package com.picadilla.notifier.domain.model;
 
-import com.picadilla.notifier.exception.UnpreparedNotificationException;
+import com.picadilla.notifier.business.strategy.NotificationStrategy;
+import com.picadilla.notifier.domain.exception.UnpreparedNotificationException;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -19,7 +20,7 @@ public class EmailNotificationTest {
     private NotificationStrategy mockStrategy;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
     }
 
