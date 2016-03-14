@@ -1,8 +1,8 @@
 package com.picadilla.notifier.domain.repository;
 
-import com.picadilla.notifier.domain.model.EmailNotification;
-import com.picadilla.notifier.domain.model.Notification;
-import com.picadilla.notifier.business.strategy.NotificationStrategy;
+import com.picadilla.notifier.domain.notification.EmailNotification;
+import com.picadilla.notifier.domain.notification.Notification;
+import com.picadilla.notifier.domain.strategy.NotificationStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;

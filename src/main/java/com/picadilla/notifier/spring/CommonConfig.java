@@ -7,6 +7,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaDialect;
@@ -16,6 +19,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
+import java.util.Properties;
 
 @Configuration
 @ComponentScan(basePackages = {"com.picadilla.notifier.domain", "com.picadilla.notifier.business"})
@@ -30,6 +34,16 @@ public class CommonConfig {
     @Value("${database.password}")
     private String dbPassword;
 
+    @Value("${mail.host}")
+    private String mailHost;
+    @Value("${mail.port}")
+    private int mailPort;
+    @Value("${mail.address}")
+    private String mailAddress;
+    @Value("${mail.password}")
+    private String mailPassword;
+    @Value("${mail.signature}")
+    private String mailSignature;
 
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
@@ -61,6 +75,30 @@ public class CommonConfig {
         dataSource.setUsername(dbUsermame);
         dataSource.setPassword(dbPassword);
         return dataSource;
+    }
+
+    @Bean
+    public MailSender mailSender() {
+        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+        mailSender.setHost(mailHost);
+        mailSender.setPort(mailPort);
+        mailSender.setUsername(mailAddress);
+        mailSender.setPassword(mailPassword);
+        mailSender.setJavaMailProperties(emailProperties());
+        return mailSender;
+    }
+
+    private Properties emailProperties() {
+        Properties emailProperties = new Properties();
+        emailProperties.put("mail.smtp.starttls.enable", "true");
+        return emailProperties;
+    }
+
+    @Bean
+    public SimpleMailMessage templateMessage() {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("\"" + mailSignature + "\" <" + mailAddress + ">");
+        return message;
     }
 
 }

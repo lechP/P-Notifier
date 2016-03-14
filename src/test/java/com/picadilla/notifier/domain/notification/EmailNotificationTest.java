@@ -1,6 +1,6 @@
-package com.picadilla.notifier.domain.model;
+package com.picadilla.notifier.domain.notification;
 
-import com.picadilla.notifier.business.strategy.NotificationStrategy;
+import com.picadilla.notifier.domain.strategy.NotificationStrategy;
 import com.picadilla.notifier.domain.exception.UnpreparedNotificationException;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,6 +15,8 @@ import static org.mockito.Mockito.verify;
 public class EmailNotificationTest {
 
     private EmailNotification testedObject;
+
+    private static final String TEST_VALID_EMAIL = "any.valid@email.com";
 
     @Mock
     private NotificationStrategy mockStrategy;
@@ -76,10 +78,10 @@ public class EmailNotificationTest {
         //when
         testedObject.send();
         //then
-        verify(mockStrategy).send(testedObject);
+        verify(mockStrategy).send(TEST_VALID_EMAIL);
     }
 
     private EmailNotification getTestEmailNotification() {
-        return new EmailNotification("any.valid@email.com", new Date());
+        return new EmailNotification(TEST_VALID_EMAIL, new Date());
     }
 }

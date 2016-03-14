@@ -1,6 +1,6 @@
 package com.picadilla.notifier.domain.repository;
 
-import com.picadilla.notifier.domain.model.Notification;
+import com.picadilla.notifier.domain.notification.Notification;
 
 import java.util.Date;
 import java.util.List;

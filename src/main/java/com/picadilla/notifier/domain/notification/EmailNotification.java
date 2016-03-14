@@ -1,7 +1,7 @@
-package com.picadilla.notifier.domain.model;
+package com.picadilla.notifier.domain.notification;
 
 import com.picadilla.notifier.domain.exception.UnpreparedNotificationException;
-import com.picadilla.notifier.business.strategy.NotificationStrategy;
+import com.picadilla.notifier.domain.strategy.NotificationStrategy;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.util.Assert;
 
@@ -13,8 +13,6 @@ import java.util.Date;
 @Entity
 @Table(name = "t")
 @NamedQueries({
-        @NamedQuery(name = "Notification.All", query = "SELECT n FROM EmailNotification n " +
-                "WHERE n.statusOfNext = 'NONE' AND n.id.date <= :maxDate"),
         @NamedQuery(name = "Notification.bunchToNotify", query = "SELECT n FROM EmailNotification n " +
                 "WHERE n.statusOfNext = 'NONE' AND n.id.date <= :maxDate")})
 public class EmailNotification implements Notification, Serializable {
@@ -71,7 +69,7 @@ public class EmailNotification implements Notification, Serializable {
         if(strategy==null){
             throw new UnpreparedNotificationException("Notification should have been prepared before it is to be sent");
         }
-        strategy.send(this);
+        strategy.send(getEmail());
     }
 
     @Override

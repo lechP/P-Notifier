@@ -1,4 +1,4 @@
-package com.picadilla.notifier.domain.model;
+package com.picadilla.notifier.domain.notification;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
