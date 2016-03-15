@@ -32,7 +32,7 @@ public class GmailNotificationStrategy implements NotificationStrategy {
             mailSender.send(msg);
             log.info("Message was successfully sent to " + recipient);
             return DeliveryReport.succeed(new Date());
-        } catch (Exception ex) {
+        } catch (MailException ex) {
             log.warn("Message could not be sent to " + recipient, ex);
             return DeliveryReport.failed();
         }

@@ -22,7 +22,7 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
-@ComponentScan(basePackages = {"com.picadilla.notifier.domain", "com.picadilla.notifier.business"})
+@ComponentScan(basePackages = {"com.picadilla.notifier.domain", "com.picadilla.notifier.service"})
 @PropertySource(value = "/application.properties")
 @EnableTransactionManagement
 public class CommonConfig {

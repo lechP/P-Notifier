@@ -1,5 +1,5 @@
 package com.picadilla.notifier.domain.notification;
 
-public enum NextNotificationStatus {
+public enum NextNotificationState {
     NONE, IN_PROGRESS, SENT;
 }

@@ -5,9 +5,9 @@ import com.picadilla.notifier.domain.notification.Notification;
 import java.util.Date;
 import java.util.List;
 
-public interface NotificationRepo {
+public interface NotificationRepo <T extends Notification> {
 
-    List<? extends Notification> prepareNotSentBefore(Date maxDate);
+    List<T> prepareNotSentAfter(Date maxDate);
 
-    void update(List<? extends Notification> notifications);
+    void update(List<T> notifications);
 }

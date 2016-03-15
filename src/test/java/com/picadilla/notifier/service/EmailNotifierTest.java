@@ -1,7 +1,6 @@
 package com.picadilla.notifier.service;
 
-import com.picadilla.notifier.business.service.EmailNotifier;
-import com.picadilla.notifier.domain.notification.Notification;
+import com.picadilla.notifier.domain.notification.EmailNotification;
 import com.picadilla.notifier.domain.repository.NotificationRepo;
 import org.assertj.core.util.Lists;
 import org.junit.Before;
@@ -12,7 +11,9 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import java.util.Calendar;
+import java.time.LocalDateTime;
+import java.time.Period;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
@@ -25,9 +26,9 @@ public class EmailNotifierTest {
     @InjectMocks
     private EmailNotifier testedObject;
     @Mock
-    private NotificationRepo notificationRepo;
+    private NotificationRepo<EmailNotification> notificationRepo;
     @Mock
-    private Notification notification;
+    private EmailNotification notification;
 
     private ArgumentCaptor<Date> argument;
 
@@ -42,23 +43,22 @@ public class EmailNotifierTest {
         //given
         final int daysOfDelay = 5;
         ReflectionTestUtils.setField(testedObject, "daysOfDelay", daysOfDelay);
-        List<Notification> preparedNotifications = Lists.newArrayList(notification, notification);
-        doReturn(preparedNotifications).when(notificationRepo).prepareNotSentBefore(any(Date.class));
+        List<EmailNotification> preparedNotifications = Lists.newArrayList(notification, notification);
+        doReturn(preparedNotifications).when(notificationRepo).prepareNotSentAfter(any(Date.class));
         //when
         Date beforeCall = new Date();
-        testedObject.notifyBunchOfPlayers();
+        testedObject.notifyBatchOfPlayers();
         Date afterCall = new Date();
         //then
-        verify(notificationRepo).prepareNotSentBefore(argument.capture());
-        assertThat(argument.getValue()).isBetween(moveDateByDays(beforeCall, -daysOfDelay), moveDateByDays(afterCall, -daysOfDelay));
+        verify(notificationRepo).prepareNotSentAfter(argument.capture());
+        assertThat(argument.getValue()).isBetween(subtractDays(beforeCall, daysOfDelay), subtractDays(afterCall, daysOfDelay));
         verify(notification, times(2)).send();
         verify(notificationRepo).update(preparedNotifications);
     }
 
-    private Date moveDateByDays(Date date, int days) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.add(Calendar.DAY_OF_MONTH, days);
-        return calendar.getTime();
+    private Date subtractDays(Date date, int days) {
+        ZoneId defaultZone = ZoneId.systemDefault();
+        LocalDateTime time = LocalDateTime.ofInstant(date.toInstant(), defaultZone).minus(Period.ofDays(days));
+        return Date.from(time.atZone(defaultZone).toInstant());
     }
 }

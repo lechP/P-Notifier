@@ -40,6 +40,8 @@ public class NotificationId implements Serializable {
         return new Date(date.getTime());
     }
 
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -55,5 +57,13 @@ public class NotificationId implements Serializable {
         int result = email.hashCode();
         result = 31 * result + date.hashCode();
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "NotificationId{" +
+                "email='" + email + '\'' +
+                ", date=" + date +
+                '}';
     }
 }

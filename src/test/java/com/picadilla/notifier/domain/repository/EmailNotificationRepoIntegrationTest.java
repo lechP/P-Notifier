@@ -1,6 +1,6 @@
 package com.picadilla.notifier.domain.repository;
 
-import com.picadilla.notifier.domain.notification.Notification;
+import com.picadilla.notifier.domain.notification.EmailNotification;
 import com.picadilla.notifier.testutil.DatabaseTest;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ public class EmailNotificationRepoIntegrationTest extends DatabaseTest {
     private static final int SINGLE_BUNCH_SIZE = 100;
 
     @Autowired
-    private NotificationRepo testedObject;
+    private NotificationRepo<EmailNotification> testedObject;
 
     @Test
     public void shouldGetNotificationsOnlyForStatusNoneAndOlderThanSpecifiedPeriod() throws Exception {
@@ -28,16 +28,18 @@ public class EmailNotificationRepoIntegrationTest extends DatabaseTest {
         Calendar rightNow = Calendar.getInstance();
         rightNow.add(Calendar.DAY_OF_MONTH, -5);
         Date maxDate = rightNow.getTime();
-        List<? extends Notification> resultList = testedObject.prepareNotSentBefore(maxDate);
+        List<EmailNotification> resultList = testedObject.prepareNotSentAfter(maxDate);
         assertThat(resultList).hasSize(2);
     }
 
     @Test
     public void shouldGetExactly100NotificationsInFirstCallAnd10InSecond() throws Exception {
         loadData(SCRIPT_110_NOTIFICATIONS);
-        List<? extends Notification> firstBunch = testedObject.prepareNotSentBefore(new Date());
-        List<? extends Notification> secondBunch = testedObject.prepareNotSentBefore(new Date());
+        List<EmailNotification> firstBunch = testedObject.prepareNotSentAfter(new Date());
+        List<EmailNotification> secondBunch = testedObject.prepareNotSentAfter(new Date());
         assertThat(firstBunch).hasSize(SINGLE_BUNCH_SIZE);
         assertThat(secondBunch).hasSize(10);
     }
+
+
 }

@@ -1,4 +1,4 @@
-package com.picadilla.notifier.business.service;
+package com.picadilla.notifier.service;
 
 public interface Scheduler {
 

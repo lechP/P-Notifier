@@ -1,8 +1,10 @@
 package com.picadilla.notifier.domain.repository;
 
 import com.picadilla.notifier.domain.notification.EmailNotification;
-import com.picadilla.notifier.domain.notification.Notification;
+import com.picadilla.notifier.domain.notification.NextNotificationState;
 import com.picadilla.notifier.domain.strategy.NotificationStrategy;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
@@ -17,7 +19,9 @@ import java.util.List;
 
 @Repository
 @Transactional
-public class EmailNotificationRepo implements NotificationRepo {
+public class EmailNotificationRepo implements NotificationRepo<EmailNotification> {
+
+    private static final Log log = LogFactory.getLog(EmailNotificationRepo.class);
 
     @PersistenceContext
     private EntityManager em;
@@ -25,19 +29,28 @@ public class EmailNotificationRepo implements NotificationRepo {
     @Autowired
     private NotificationStrategy strategy;
     @Value("${notifier.batch.size}")
-    private int sizeOfBunch;
+    private int batchSize;
 
-    public List<EmailNotification> prepareNotSentBefore(@Nonnull Date maxDate) {
+    public List<EmailNotification> prepareNotSentAfter(@Nonnull Date maxDate) {
         Assert.notNull(maxDate);
-        List<EmailNotification> notifications = em.createNamedQuery("Notification.bunchToNotify", EmailNotification.class)
+        log.debug("Searching for notifications not sent after " + maxDate);
+        List<EmailNotification> notifications = em.createNamedQuery("Notification.batchToNotify", EmailNotification.class)
                 .setParameter("maxDate", maxDate)
-                .setMaxResults(sizeOfBunch).getResultList();
+                .setMaxResults(batchSize).getResultList();
         notifications.forEach(notification -> notification.prepare(strategy));
+        log.debug(notifications.size() + " notifications found ");
         return notifications;
     }
 
     @Override
-    public void update(List<? extends Notification> notifications) {
-
+    public void update(@Nonnull List<EmailNotification> notifications) {
+        Assert.notNull(notifications);
+        log.debug("Updating " + notifications.size() + " notifications and theirs successors in db.");
+        notifications.forEach(notification -> {
+            em.merge(notification);
+            if(notification.getNextNotificationState()== NextNotificationState.SENT){
+                em.persist(notification.getNextNotification());
+            }
+        });
     }
 }

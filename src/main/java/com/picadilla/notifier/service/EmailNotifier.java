@@ -1,7 +1,9 @@
-package com.picadilla.notifier.business.service;
+package com.picadilla.notifier.service;
 
-import com.picadilla.notifier.domain.notification.Notification;
+import com.picadilla.notifier.domain.notification.EmailNotification;
 import com.picadilla.notifier.domain.repository.NotificationRepo;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -15,17 +17,20 @@ import java.util.List;
 @Service
 public class EmailNotifier implements Notifier {
 
-    @Autowired
-    private NotificationRepo notificationRepo;
+    private static final Log log = LogFactory.getLog(EmailNotifier.class);
 
+    @Autowired
+    private NotificationRepo<EmailNotification> notificationRepo;
+
+    //TODO move down?
     @Value("${notifier.delay.period.days}")
     private int daysOfDelay;
 
     @Override
-    public void notifyBunchOfPlayers() {
-        //TODO is there possibility to get rid of "? extends"
-        List<? extends Notification> notifications = notificationRepo.prepareNotSentBefore(getShiftedDate(daysOfDelay));
-        notifications.forEach(Notification::send);
+    public void notifyBatchOfPlayers() {
+        log.debug("Notifying next batch of players.");
+        List<EmailNotification> notifications = notificationRepo.prepareNotSentAfter(getShiftedDate(daysOfDelay));
+        notifications.forEach(EmailNotification::send);
         notificationRepo.update(notifications);
     }
 
