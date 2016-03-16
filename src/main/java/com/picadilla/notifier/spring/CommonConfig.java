@@ -1,11 +1,13 @@
 package com.picadilla.notifier.spring;
 
+import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
+import org.jasypt.encryption.pbe.config.EnvironmentStringPBEConfig;
+import org.jasypt.spring31.properties.EncryptablePropertyPlaceholderConfigurer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
@@ -23,7 +25,6 @@ import java.util.Properties;
 
 @Configuration
 @ComponentScan(basePackages = {"com.picadilla.notifier.domain", "com.picadilla.notifier.service"})
-@PropertySource(value = "/application.properties")
 @EnableTransactionManagement
 public class CommonConfig {
 
@@ -45,9 +46,29 @@ public class CommonConfig {
     @Value("${mail.signature}")
     private String mailSignature;
 
+    private static final String ENCRYPTION_KEY = "#G4m3D3v";
+    private static final String ENCRYPTION_ALGORITHM = "PBEWithMD5AndDES";
+
     @Bean
-    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
-        return new PropertySourcesPlaceholderConfigurer();
+    public static EnvironmentStringPBEConfig environmentVariablesConfiguration() {
+        EnvironmentStringPBEConfig pbeConfig = new EnvironmentStringPBEConfig();
+        pbeConfig.setAlgorithm(ENCRYPTION_ALGORITHM);
+        pbeConfig.setPassword(ENCRYPTION_KEY);
+        return pbeConfig;
+    }
+
+    @Bean
+    public static StandardPBEStringEncryptor configurationEncryptor() {
+        StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
+        encryptor.setConfig(environmentVariablesConfiguration());
+        return encryptor;
+    }
+
+    @Bean
+    public static EncryptablePropertyPlaceholderConfigurer propertyConfigurer() {
+        EncryptablePropertyPlaceholderConfigurer configurer = new EncryptablePropertyPlaceholderConfigurer(configurationEncryptor());
+        configurer.setLocation(new ClassPathResource("/application.properties"));
+        return configurer;
     }
 
     @Bean
