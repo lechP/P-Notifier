@@ -22,7 +22,6 @@ public class EmailNotifier implements Notifier {
     @Autowired
     private NotificationRepo<EmailNotification> notificationRepo;
 
-    //TODO move down?
     @Value("${notifier.delay.period.days}")
     private int daysOfDelay;
 

@@ -4,6 +4,7 @@ import com.picadilla.notifier.domain.common.DeliveryReport;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
@@ -20,14 +21,17 @@ public class GmailNotificationStrategy implements NotificationStrategy {
     private MailSender mailSender;
     @Autowired
     private SimpleMailMessage templateMessage;
+    @Value("${message.title}")
+    private String messageTitle;
+    @Value("${message.body}")
+    private String messageBody;
 
     @Override
     public DeliveryReport send(String recipient) {
         SimpleMailMessage msg = new SimpleMailMessage(this.templateMessage);
         msg.setTo(recipient);
-        //TODO change these strings
-        msg.setSubject("Awesome Game reminder");
-        msg.setText("Dear " + recipient + ", we miss you very much. Let's play!");
+        msg.setSubject(messageTitle);
+        msg.setText(String.format(messageBody, recipient));
         try {
             mailSender.send(msg);
             log.info("Message was successfully sent to " + recipient);

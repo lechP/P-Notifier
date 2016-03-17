@@ -45,12 +45,12 @@ public class EmailNotificationRepo implements NotificationRepo<EmailNotification
     @Override
     public void update(@Nonnull List<EmailNotification> notifications) {
         Assert.notNull(notifications);
-        log.debug("Updating " + notifications.size() + " notifications and theirs successors in db.");
         notifications.forEach(notification -> {
             em.merge(notification);
             if(notification.getNextNotificationState()== NextNotificationState.SENT){
                 em.persist(notification.getNextNotification());
             }
         });
+        log.debug("Updated " + notifications.size() + " notifications and theirs successors in db.");
     }
 }

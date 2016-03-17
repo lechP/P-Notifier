@@ -46,9 +46,9 @@ public class EmailNotifierTest {
         List<EmailNotification> preparedNotifications = Lists.newArrayList(notification, notification);
         doReturn(preparedNotifications).when(notificationRepo).prepareNotSentAfter(any(Date.class));
         //when
-        Date beforeCall = new Date();
+        Date beforeCall = currentTimeShiftedByMillis(-1);
         testedObject.notifyBatchOfPlayers();
-        Date afterCall = new Date();
+        Date afterCall = currentTimeShiftedByMillis(+1);
         //then
         verify(notificationRepo).prepareNotSentAfter(argument.capture());
         assertThat(argument.getValue()).isBetween(subtractDays(beforeCall, daysOfDelay), subtractDays(afterCall, daysOfDelay));
@@ -60,5 +60,9 @@ public class EmailNotifierTest {
         ZoneId defaultZone = ZoneId.systemDefault();
         LocalDateTime time = LocalDateTime.ofInstant(date.toInstant(), defaultZone).minus(Period.ofDays(days));
         return Date.from(time.atZone(defaultZone).toInstant());
+    }
+
+    private Date currentTimeShiftedByMillis(int millis) {
+        return new Date(new Date().getTime() + millis);
     }
 }

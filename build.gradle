@@ -3,11 +3,15 @@ apply plugin: 'java'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
-version = '1.0'
 
-defaultTasks 'clean', 'build', 'copyToLib'
+defaultTasks 'clean', 'build', 'copyDeps', 'copyBin'
 
-task copyToLib(type: Copy) {
+task copyBin(type: Copy) {
+    into "$buildDir/libs"
+    from "src/main/bin/"
+}
+
+task copyDeps(type: Copy) {
     into "$buildDir/libs/lib"
     from configurations.runtime
 }

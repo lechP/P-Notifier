@@ -9,6 +9,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.mail.MailSendException;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
@@ -30,6 +31,8 @@ public class GmailNotificationStrategyTest {
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
+        ReflectionTestUtils.setField(testedObject, "messageBody", "any body");
+        ReflectionTestUtils.setField(testedObject, "messageTitle", "any title");
     }
 
     @Test

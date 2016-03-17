@@ -5,7 +5,9 @@ import com.picadilla.notifier.testutil.DatabaseTest;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Calendar;
+import java.time.LocalDateTime;
+import java.time.Period;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
@@ -24,21 +26,31 @@ public class EmailNotificationRepoIntegrationTest extends DatabaseTest {
 
     @Test
     public void shouldGetNotificationsOnlyForStatusNoneAndOlderThanSpecifiedPeriod() throws Exception {
+        //given
         loadData(SCRIPT_SMALL);
-        Calendar rightNow = Calendar.getInstance();
-        rightNow.add(Calendar.DAY_OF_MONTH, -5);
-        Date maxDate = rightNow.getTime();
+        Date maxDate = getDateMinusDays(5);
+        //when
         List<EmailNotification> resultList = testedObject.prepareNotSentAfter(maxDate);
+        //then
         assertThat(resultList).hasSize(2);
     }
 
     @Test
     public void shouldGetExactly100NotificationsInFirstCallAnd10InSecond() throws Exception {
+        //given
         loadData(SCRIPT_110_NOTIFICATIONS);
+        //when
         List<EmailNotification> firstBunch = testedObject.prepareNotSentAfter(new Date());
         List<EmailNotification> secondBunch = testedObject.prepareNotSentAfter(new Date());
+        //then
         assertThat(firstBunch).hasSize(SINGLE_BUNCH_SIZE);
         assertThat(secondBunch).hasSize(10);
+    }
+
+    private Date getDateMinusDays(int days) {
+        ZoneId defaultZone = ZoneId.systemDefault();
+        LocalDateTime time = LocalDateTime.ofInstant(new Date().toInstant(), defaultZone).minus(Period.ofDays(days));
+        return Date.from(time.atZone(defaultZone).toInstant());
     }
 
 
