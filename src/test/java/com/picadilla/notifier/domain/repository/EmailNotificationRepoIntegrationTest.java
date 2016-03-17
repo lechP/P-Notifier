@@ -1,7 +1,7 @@
 package com.picadilla.notifier.domain.repository;
 
 import com.picadilla.notifier.domain.notification.EmailNotification;
-import com.picadilla.notifier.testutil.DatabaseTest;
+import com.picadilla.notifier.testutil.IntegrationTest;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -13,7 +13,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class EmailNotificationRepoIntegrationTest extends DatabaseTest {
+public class EmailNotificationRepoIntegrationTest extends IntegrationTest {
 
     private static final String SCRIPTS_PATH = "/db/integration/";
     private static final String SCRIPT_110_NOTIFICATIONS = SCRIPTS_PATH + "testset_exceedingSingleBunchSize.sql";

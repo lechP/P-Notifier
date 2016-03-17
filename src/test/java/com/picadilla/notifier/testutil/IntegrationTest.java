@@ -21,9 +21,9 @@ import javax.sql.DataSource;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = Config.class)
 @Transactional
-public abstract class DatabaseTest {
+public abstract class IntegrationTest {
 
-    public static final Log log = LogFactory.getLog(DatabaseTest.class);
+    public static final Log log = LogFactory.getLog(IntegrationTest.class);
 
     @Autowired
     protected ApplicationContext ctx;

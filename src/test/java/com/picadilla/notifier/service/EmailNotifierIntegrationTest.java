@@ -4,7 +4,7 @@ import com.icegreen.greenmail.util.GreenMail;
 import com.icegreen.greenmail.util.ServerSetup;
 import com.picadilla.notifier.domain.notification.EmailNotification;
 import com.picadilla.notifier.domain.notification.NextNotificationState;
-import com.picadilla.notifier.testutil.DatabaseTest;
+import com.picadilla.notifier.testutil.IntegrationTest;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,7 +19,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class EmailNotifierIntegrationTest extends DatabaseTest {
+public class EmailNotifierIntegrationTest extends IntegrationTest {
 
     @Autowired
     private EmailNotifier testedObject;
