@@ -24,8 +24,7 @@ public class NotificationId implements Serializable {
     /**
      * for JPA provider use only
      */
-    protected NotificationId() {
-    }
+    protected NotificationId() {}
 
     /**
      * should not be created outside the package
