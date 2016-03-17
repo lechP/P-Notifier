@@ -34,10 +34,12 @@ public class EmailNotificationRepo implements NotificationRepo<EmailNotification
     public List<EmailNotification> prepareNotSentAfter(@Nonnull Date maxDate) {
         Assert.notNull(maxDate);
         log.debug("Searching for notifications not sent after " + maxDate);
+
         List<EmailNotification> notifications = em.createNamedQuery("Notification.batchToNotify", EmailNotification.class)
                 .setParameter("maxDate", maxDate)
                 .setMaxResults(batchSize).getResultList();
         notifications.forEach(notification -> notification.prepare(strategy));
+
         log.debug(notifications.size() + " notifications found ");
         return notifications;
     }
@@ -47,7 +49,7 @@ public class EmailNotificationRepo implements NotificationRepo<EmailNotification
         Assert.notNull(notifications);
         notifications.forEach(notification -> {
             em.merge(notification);
-            if(notification.getNextNotificationState()== NextNotificationState.SENT){
+            if (notification.getNextNotificationState() == NextNotificationState.SENT) {
                 em.persist(notification.getNextNotification());
             }
         });

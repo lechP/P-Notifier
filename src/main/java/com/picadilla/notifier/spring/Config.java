@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.mail.MailSender;
@@ -27,7 +26,7 @@ import java.util.Properties;
 @Configuration
 @ComponentScan(basePackages = {"com.picadilla.notifier.domain", "com.picadilla.notifier.service"})
 @EnableTransactionManagement
-public class CommonConfig {
+public class Config {
 
     @Value("${database.url}")
     private String dbUrl;

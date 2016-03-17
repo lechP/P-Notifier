@@ -29,10 +29,10 @@ public class NotificationScheduler implements Scheduler {
         service.scheduleAtFixedRate(() -> notifier.notifyBatchOfPlayers(), 0, periodValue, getTimeUnit());
     }
 
-    private TimeUnit getTimeUnit(){
-        try{
+    private TimeUnit getTimeUnit() {
+        try {
             return TimeUnit.valueOf(periodUnit);
-        }catch(IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             return TimeUnit.HOURS;
         }
     }

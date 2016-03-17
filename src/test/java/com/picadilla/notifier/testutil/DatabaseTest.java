@@ -1,6 +1,6 @@
 package com.picadilla.notifier.testutil;
 
-import com.picadilla.notifier.spring.CommonConfig;
+import com.picadilla.notifier.spring.Config;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.runner.RunWith;
@@ -19,7 +19,7 @@ import javax.sql.DataSource;
  * abstract class supporting integration tests which need whole Spring context (especially connection with database)
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes=CommonConfig.class)
+@ContextConfiguration(classes = Config.class)
 @Transactional
 public abstract class DatabaseTest {
 
@@ -33,6 +33,7 @@ public abstract class DatabaseTest {
     /**
      * Loads data to the database using script under provided scriptPath. Designed as helper method for tests.
      * Thanks to @Transactional annotation, script will be rolled back after end of each test using this method.
+     *
      * @param scriptPath path to sql script
      */
     protected void loadData(String scriptPath) {

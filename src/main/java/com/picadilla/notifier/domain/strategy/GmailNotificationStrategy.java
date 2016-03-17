@@ -28,10 +28,7 @@ public class GmailNotificationStrategy implements NotificationStrategy {
 
     @Override
     public DeliveryReport send(String recipient) {
-        SimpleMailMessage msg = new SimpleMailMessage(this.templateMessage);
-        msg.setTo(recipient);
-        msg.setSubject(messageTitle);
-        msg.setText(String.format(messageBody, recipient));
+        SimpleMailMessage msg = composeMessage(recipient);
         try {
             mailSender.send(msg);
             log.info("Message was successfully sent to " + recipient);
@@ -40,6 +37,14 @@ public class GmailNotificationStrategy implements NotificationStrategy {
             log.warn("Message could not be sent to " + recipient, ex);
             return DeliveryReport.failed();
         }
+    }
+
+    private SimpleMailMessage composeMessage(String recipient) {
+        SimpleMailMessage msg = new SimpleMailMessage(this.templateMessage);
+        msg.setTo(recipient);
+        msg.setSubject(messageTitle);
+        msg.setText(String.format(messageBody, recipient));
+        return msg;
     }
 
 }

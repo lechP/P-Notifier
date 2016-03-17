@@ -7,6 +7,9 @@ import javax.persistence.TemporalType;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * Embedded id of the {@link EmailNotification}
+ */
 @Embeddable
 public class NotificationId implements Serializable {
 
@@ -39,8 +42,6 @@ public class NotificationId implements Serializable {
     public Date getDate() {
         return new Date(date.getTime());
     }
-
-
 
     @Override
     public boolean equals(Object o) {

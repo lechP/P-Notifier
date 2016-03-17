@@ -2,8 +2,8 @@ package com.picadilla.notifier.domain.notification;
 
 import com.picadilla.notifier.domain.common.DeliveryReport;
 import com.picadilla.notifier.domain.exception.UndeliveriedNotificationException;
-import com.picadilla.notifier.domain.strategy.NotificationStrategy;
 import com.picadilla.notifier.domain.exception.UnpreparedNotificationException;
+import com.picadilla.notifier.domain.strategy.NotificationStrategy;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -13,7 +13,6 @@ import java.util.Date;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
